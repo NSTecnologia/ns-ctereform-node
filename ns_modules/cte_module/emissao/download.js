@@ -32,17 +32,17 @@ async function sendPostRequest(body, caminho, token) {
 
         let responseAPI = new Response(await nsAPI.PostRequest(url, body, token))
 
-        if (responseAPI.json != null) {
+        if (responseAPI.json != null && caminho !== null) {
             util.salvarArquivo(caminho, responseAPI.chCTe, "-cteProc.json", responseAPI.json)
         }
 
-        if (responseAPI.pdf != null) {
+        if (responseAPI.pdf != null && caminho !== null) {
             let data = responseAPI.pdf;
             let buff = Buffer.from(data, 'base64');
             util.salvarArquivo(caminho, responseAPI.chCTe, "-cteProc.pdf", buff)
         }
 
-        if (responseAPI.xml != null) {
+        if (responseAPI.xml != null && caminho !== null) {
             util.salvarArquivo(caminho, responseAPI.chCTe, "-cteProc.xml", responseAPI.xml)
         }
 
