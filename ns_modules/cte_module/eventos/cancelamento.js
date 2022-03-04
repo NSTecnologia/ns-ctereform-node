@@ -1,5 +1,6 @@
 const nsAPI = require('../../api_module/nsAPI')
 const downloadEvento = require('./downloadEvento')
+const util = require('../../api_module/util')
 
 const url = "https://cte.ns.eti.br/cte/cancel/300"
 
@@ -14,38 +15,57 @@ class Body {
 }
 
 class Response {
-    constructor({ status, motivo, retEvento, xml, erros }) {
+    constructor({ status, motivo, retEvento, xml, erros, codigo, descricao }) {
         this.status = status;
         this.motivo = motivo;
         this.retEvento = retEvento;
         this.xml = xml;
         this.erros = erros
+        this.codigo = codigo;
+        this.descricao = descricao
     }
 }
 
 async function sendPostRequest(conteudo, tpDown, caminhoSalvar, token) {
 
-    let responseAPI = new Response(await nsAPI.PostRequest(url, conteudo, token))
+    try{
 
-    if (responseAPI.status == 200) {
+        let responseAPI = new Response(await nsAPI.PostRequest(url, conteudo, token))
 
-        if (responseAPI.retEvento.cStat == 135) {
+             if (responseAPI.status == 200) {
 
-            let downloadEventoBody = new downloadEvento.Body(
-                responseAPI.retEvento.chCTe,
-                conteudo.tpAmb,
-                tpDown,
-                "CANC",
-                "1"
+                 if (responseAPI.retEvento.cStat == 135) {
+
+                     let downloadEventoBody = new downloadEvento.Body(
+                     responseAPI.retEvento.chCTe,
+                     conteudo.tpAmb,
+                     tpDown,
+                     "CANC",
+                     "1"
             )
 
-            let downloadEventoResponse = await downloadEvento.sendPostRequest(downloadEventoBody, caminhoSalvar)
+                try{
 
-            return downloadEventoResponse
+                    let downloadEventoResponse = await downloadEvento.sendPostRequest(downloadEventoBody, caminhoSalvar)
+
+                    return downloadEventoResponse
+                    }
+
+                    catch (error) {
+                        util.gravarLinhaLog("[ERRO_DOWNLOAD_EVENTO_CORRECAO]: " + error)
+                    }
+
+                }
+
+            }
+
+                return responseAPI
+
         }
-    }
-
-    return responseAPI
+        catch (error) {
+            util.gravarLinhaLog("[ERRO_CANCELAMENTO]: " + error)
+            return error
+        }
 }
 
 module.exports = { Body, sendPostRequest }
