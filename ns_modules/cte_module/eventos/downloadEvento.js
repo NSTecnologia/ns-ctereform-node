@@ -51,17 +51,17 @@ async function sendPostRequest(conteudo, caminhoSalvar, token) {
 
     }
 
-    if (responseAPI.json != null) {
+    if (responseAPI.json != null && caminhoSalvar !==null) {
         util.salvarArquivo(caminhoSalvar, idEvento + responseAPI.retEvento.chCTe + conteudo.nSeqEvento, "-procEven.json", responseAPI.json)
     }
 
-    if (responseAPI.pdf != null) {
+    if (responseAPI.pdf != null && caminhoSalvar !==null) {
         let data = responseAPI.pdf;
         let buff = Buffer.from(data, 'base64');
         util.salvarArquivo(caminhoSalvar, idEvento + responseAPI.retEvento.chCTe + conteudo.nSeqEvento, "-procEven.pdf", buff)
     }
 
-    if (responseAPI.xml != null) {
+    if (responseAPI.xml != null && caminhoSalvar !==null) {
         util.salvarArquivo(caminhoSalvar, idEvento + responseAPI.retEvento.chCTe + conteudo.nSeqEvento, "-procEven.xml", responseAPI.xml)
     }
 

@@ -24,19 +24,42 @@ class Response {
 
 async function sendPostRequest(conteudo, tpDown, caminhoSalvar, token) {
 
-    let responseAPI = new Response(await nsAPI.PostRequest(url, conteudo, token))
+    try {
 
-    let downloadEventoBody = new downloadEvento.Body(
-        responseAPI.retEvento.chCTe,
-        conteudo.tpAmb,
-        tpDown,
-        "CCE",
-        conteudo.nSeqEvento
-    )
+        let responseAPI = new Response(await nsAPI.PostRequest(url, conteudo, token))
 
-    let downloadEventoResponse = await downloadEvento.sendPostRequest(downloadEventoBody, caminhoSalvar)
+        if (responseAPI.status == 200) {
 
-    return downloadEventoResponse
+            if (responseAPI.retEvento.cStat == 135) {
+
+                let downloadEventoBody = new downloadEvento.Body(
+                    responseAPI.retEvento.chNFe,
+                    conteudo.tpAmb,
+                    tpDown,
+                    "CCe",
+                    conteudo.nSeqEvento
+                )
+
+                try {
+                    let downloadEventoResponse = await downloadEvento.sendPostRequest(downloadEventoBody, caminhoSalvar)
+
+                    return downloadEventoResponse
+                }
+
+                catch (error) {
+                    gravarLinhaLog("[ERRO_DOWNLOAD_EVENTO_CORRECAO]: " + error)
+                }
+
+            }
+        }
+
+        return responseAPI
+    }
+    
+    catch (error) {
+        gravarLinhaLog("[ERRO_CANCELAMENTO]: " + error)
+        return error
+    }
 }
 
 module.exports = { Body, sendPostRequest }
