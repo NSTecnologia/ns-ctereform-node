@@ -1,5 +1,6 @@
 const nsAPI = require('../../api_module/nsAPI')
 const downloadEvento = require('./downloadEvento')
+const util = require('../../api_module/util')
 
 const url = "https://cte.ns.eti.br/cte/cce/300"
 
@@ -50,7 +51,7 @@ async function sendPostRequest(conteudo, tpDown, caminhoSalvar, token) {
                 }
 
                 catch (error) {
-                    gravarLinhaLog("[ERRO_DOWNLOAD_EVENTO_CORRECAO]: " + error)
+                    util.gravarLinhaLog("[ERRO_DOWNLOAD_EVENTO_CORRECAO]: " + error)
                 }
 
             }
