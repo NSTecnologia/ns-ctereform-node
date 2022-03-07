@@ -34,7 +34,7 @@ async function sendPostRequest(conteudo, tpDown, caminhoSalvar, token) {
 
         let downloadInutBody = new downloadInut.Body(responseAPI.retornoInutCTe.chave, "2", tpDown)
 
-        let downloadInutResponse = await downloadInut.sendPostRequest(downloadInutBody, caminhoSalvar)
+        let downloadInutResponse = await downloadInut.sendPostRequest(downloadInutBody, caminhoSalvar, token)
 
         return downloadInutResponse
 

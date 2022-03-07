@@ -15,10 +15,12 @@ class Body {
 }
 
 class Response {
-    constructor({ status, motivo, retEvento, erros, codigo, descricao }) {
+    constructor({ status, motivo, retEvento, xml, pdf, erros, codigo, descricao }) {
         this.status = status;
         this.motivo = motivo;
         this.retEvento = retEvento;
+        this.xml = xml;
+        this.pdf = pdf;
         this.erros = erros;
         this.codigo = codigo;
         this.descricao = descricao
@@ -37,15 +39,15 @@ async function sendPostRequest(conteudo, tpDown, caminhoSalvar, token) {
             if (responseAPI.retEvento.cStat == 135) {
 
                 let downloadEventoBody = new downloadEvento.Body(
-                    responseAPI.retEvento.chNFe,
+                    responseAPI.retEvento.chCTe,
                     conteudo.tpAmb,
                     tpDown,
-                    "CCe",
+                    "CCE",
                     conteudo.nSeqEvento
                 )
 
                 try {
-                    let downloadEventoResponse = await downloadEvento.sendPostRequest(downloadEventoBody, caminhoSalvar)
+                    let downloadEventoResponse = await downloadEvento.sendPostRequest(downloadEventoBody, caminhoSalvar, token)
 
                     return downloadEventoResponse
                 }
@@ -61,7 +63,7 @@ async function sendPostRequest(conteudo, tpDown, caminhoSalvar, token) {
     }
     
     catch (error) {
-        gravarLinhaLog("[ERRO_CANCELAMENTO]: " + error)
+        util.gravarLinhaLog("[ERRO_CANCELAMENTO]: " + error)
         return error
     }
 }

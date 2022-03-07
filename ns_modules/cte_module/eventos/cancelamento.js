@@ -46,7 +46,7 @@ async function sendPostRequest(conteudo, tpDown, caminhoSalvar, token) {
 
                 try{
 
-                    let downloadEventoResponse = await downloadEvento.sendPostRequest(downloadEventoBody, caminhoSalvar)
+                    let downloadEventoResponse = await downloadEvento.sendPostRequest(downloadEventoBody, caminhoSalvar, token)
 
                     return downloadEventoResponse
                     }
