@@ -32,6 +32,8 @@ async function sendPostRequest(conteudo, tpDown, caminhoSalvar, token) {
 
         let responseAPI = new Response(await nsAPI.PostRequest(url, conteudo, token))
 
+        await new Promise(resolve => setTimeout(resolve, 500));
+
         let downloadInutBody = new downloadInut.Body(responseAPI.retornoInutCTe.chave, "2", tpDown)
 
         let downloadInutResponse = await downloadInut.sendPostRequest(downloadInutBody, caminhoSalvar, token)

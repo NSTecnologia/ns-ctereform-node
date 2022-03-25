@@ -23,6 +23,7 @@ async function sendPostRequest(conteudo, caminhoSalvar, token) {
 
     try {
 
+
         let responseAPI = new Response(await nsAPI.PostRequest(url, conteudo, token))
 
         if (responseAPI.retInut.json != null) {

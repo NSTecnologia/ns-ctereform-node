@@ -41,6 +41,8 @@ async function sendPostRequest(conteudo, tpDown, caminhoSalvar, token) {
                 "1"
             )
 
+            await new Promise(resolve => setTimeout(resolve, 500));    
+
             let downloadEventoResponse = await downloadEvento.sendPostRequest(downloadEventoBody, caminhoSalvar, token)
 
             return downloadEventoResponse
