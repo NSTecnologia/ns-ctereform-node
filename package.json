@@ -1,6 +1,6 @@
 {
   "name": "ns-ctereform-node",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Biblioteca alterada para auxiliar a integração do parceiro cuja foi alterado o padrão que usava o configParceiro mudando para a passagem do token e do cnpj como parametros no envio, consulta de status e download. ",
   "main": "index.js",
   "scripts": {
