@@ -28,26 +28,45 @@ class Response {
 
 async function sendPostRequest(conteudo, tpDown, caminhoSalvar, token) {
 
-    try {
+    try{
 
         let responseAPI = new Response(await nsAPI.PostRequest(url, conteudo, token))
 
-        await new Promise(resolve => setTimeout(resolve, 500));
+             if (responseAPI.status == 200) {
 
-        let downloadInutBody = new downloadInut.Body(responseAPI.retornoInutCTe.chave, "2", tpDown)
+                 if (responseAPI.retornoInutCTe.cStat == 102) {
 
-        let downloadInutResponse = await downloadInut.sendPostRequest(downloadInutBody, caminhoSalvar, token)
+                     let downloadEventoInutBody = new downloadEventoInutBody.Body(
+                     responseAPI.retornoInutCTe.chCTe,
+                     conteudo.tpAmb,
+                     tpDown
+            )
 
-        return downloadInutResponse
+                try{
 
-    }
+                    await new Promise(resolve => setTimeout(resolve, 500));
 
-    catch (error) {
+                    let downloadEventoInutResponse = await downloadEvento.sendPostRequest(downloadEventoInutBody, caminhoSalvar, token)
 
-        return error
-    }
+                    return downloadEventoInutResponse
+                    }
 
+                    catch (error) {
+                        util.gravarLinhaLog("[ERRO_DOWNLOAD_EVENTO_INUTILIZACAO]: " + error)
+                    }
 
+                }
+
+            }
+
+                return responseAPI
+
+        }
+        catch (error) {
+            util.gravarLinhaLog("[ERRO_INUTILIZACAO]: " + error)
+            return error
+        }
 }
 
 module.exports = { Body, sendPostRequest }
+

@@ -54,7 +54,7 @@ async function sendPostRequest(conteudo, tpDown, caminhoSalvar, token) {
                     }
 
                     catch (error) {
-                        util.gravarLinhaLog("[ERRO_DOWNLOAD_EVENTO_CORRECAO]: " + error)
+                        util.gravarLinhaLog("[ERRO_DOWNLOAD_EVENTO_CANCELAMENTO]: " + error)
                     }
 
                 }
