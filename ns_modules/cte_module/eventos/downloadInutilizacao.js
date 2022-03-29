@@ -26,17 +26,17 @@ async function sendPostRequest(conteudo, caminhoSalvar, token) {
 
         let responseAPI = new Response(await nsAPI.PostRequest(url, conteudo, token))
 
-        if (responseAPI.retInut.json != null) {
+        if (responseAPI.retInut.json != null && caminhoSalvar !==null) {
             util.salvarArquivo(caminhoSalvar, responseAPI.retInut.chave, "-procInut.json", responseAPI.retInut.json)
         }
 
-        if (responseAPI.retInut.pdf != null) {
+        if (responseAPI.retInut.pdf != null && caminhoSalvar !==null) {
             let data = responseAPI.retInut.pdf;
             let buff = Buffer.from(data, 'base64');
             util.salvarArquivo(caminhoSalvar, responseAPI.retInut.chave, "-procInut.pdf", buff)
         }
 
-        if (responseAPI.retInut.xml != null) {
+        if (responseAPI.retInut.xml != null && caminhoSalvar !==null) {
             util.salvarArquivo(caminhoSalvar, responseAPI.retInut.chave, "-procInut.xml", responseAPI.retInut.xml)
         }
 
