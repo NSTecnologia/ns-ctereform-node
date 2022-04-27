@@ -18,11 +18,11 @@ class Body {
 }
 
 class Response {
-    constructor({ status, motivo, retornoInutCTe, erros }) {
+    constructor({ status, motivo, retornoInutCTe, erro }) {
         this.status = status;
         this.motivo = motivo;
         this.retornoInutCTe = retornoInutCTe;
-        this.erros = erros
+        this.erro = erro
     }
 }
 
